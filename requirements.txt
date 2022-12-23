@@ -1,0 +1,6 @@
+sentence-transformers
+pinecone-client
+transformers
+streamlit
+pandas
+nltk
