@@ -21,7 +21,7 @@ def init_pinecone():
     """
     api_key = st.secrets['API_KEY']
     pinecone.init(api_key=api_key, environment='us-west1-gcp')
-    return pinecone.Index('video-search')
+    return pinecone.Index('video-index-merged')
     
 
 @st.experimental_singleton
