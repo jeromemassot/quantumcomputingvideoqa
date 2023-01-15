@@ -21,7 +21,7 @@ def init_pinecone():
     """
     api_key = st.secrets['API_KEY']
     pinecone.init(api_key=api_key, environment='us-west1-gcp')
-    return pinecone.Index('video-search')
+    return pinecone.Index('video-index-merged')
     
 
 @st.experimental_singleton
@@ -95,8 +95,12 @@ st.title("Google and IBM Quantum Computing Videos Q&A Engine")
 st.subheader("Explore knowledge from Google & IBM YouTube videos")
 
 # Index and Retriever model setup
-index = init_pinecone()
-retriever = init_retriever()
+with st.spinner(text="Initializing index..."):
+    index = init_pinecone()
+
+with st.spinner(text="Initializing Retriever model..."):
+    retriever = init_retriever()
+
 #question_answerer = load_qa_pipeline()
 
 query = st.text_input("Question:", help="enter your question here")
@@ -142,15 +146,25 @@ st.warning(
     """
 )
 
-bottom_column_1, bottom_column_2 = st.columns([1, 9])
+bottom_column_1, bottom_column_2, bottom_column_3 = st.columns([2, 6, 2])
 with bottom_column_1:
-    st.image("./decorations/logo-petroglyphs.jpg", width=60)
+    st.image("./decorations/logo-petroglyphs.jpg")
 
 with bottom_column_2:
     st.caption(
         """
         If you are interested by adding similar Semantic Search Engine 
         to your content, please contact Petroglyphs NLP Consulting 
-        (petroglyphs.nlp@gmail.com)
+        (petroglyphs.nlp@gmail.com).
+        """)
+    st.caption(
+        """
+        You can also 
+        ["Buy me a Coffee"](https://www.buymeacoffee.com/petroglyphx)
+        for the coasts associated to the Search indexing. Thanks.
         """
     )
+
+with bottom_column_3:
+    # buy me a coffee button
+    st.image("./decorations/bmc_qr.png", width=100)
